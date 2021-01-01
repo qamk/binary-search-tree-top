@@ -27,21 +27,20 @@ def driver_rebalance(obj)
 end
 
 def wait(sec)
-  puts 'One moment...'
+  puts '............'
   system("sleep #{sec}")
-  puts 'OK.'
 end
 
 def traverse(obj)
   wait('3.1')
   puts "Hmm... Let's \e[38;5;4mtraverse\e[0m this tree..."
-  puts "Level-order: #{obj.level_order}"
+  puts "\e[38;5;3mLevel-order:\e[0m #{obj.level_order}"
   wait('1.5')
-  puts "In-order: #{obj.inorder}"
+  puts "\e[38;5;2mIn-order:\e[0m #{obj.inorder}"
   wait('1.5')
-  puts "Pre-order: #{obj.preorder}"
+  puts "\e[38;5;4mPre-order:\e[0m #{obj.preorder}"
   wait('1.5')
-  puts "Post-order: #{obj.postorder}"
+  puts "\e[38;5;6mPost-order:\e[0m #{obj.postorder}"
 end
 
 def adding(obj)
