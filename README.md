@@ -1,4 +1,4 @@
-# binary-search-tree-top
+# Binary Search Tree
 This program allows you to interact with a Binary Search Tree (BST). Like in the [linked list program](https://github.com/qamk/linked-list-top), there is an "interface" so to speak, where you can enter different commands to use the list.
 However, this program also has *driver code* which, much like in the [recursion program](https://repl.it/@qamk/recursion-top#README.md) interacts with the BST on behalf of the user. Live version [here](https://repl.it/@qamk/binary-search-tree-top#README.md).
 
