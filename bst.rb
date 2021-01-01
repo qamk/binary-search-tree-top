@@ -3,7 +3,7 @@
 require_relative 'node.rb'
 require_relative 'traversal.rb'
 require_relative 'commands.rb'
-require 'pry'
+require_relative 'driver.rb'
 
 # Class representing a Balanced Binary Search Tree (BST)
 class BST
@@ -13,11 +13,12 @@ class BST
   def initialize
     array = Array.new(rand(5..15)) { rand(230) }.sort.uniq # might use my merge_sort later
     @root = build_tree(array)
+    welcome
     play
   end
 
   def play
-    welcome
+    response = ''
     loop do
       prompt
       response = gets.chomp.downcase
@@ -28,6 +29,7 @@ class BST
       action = use[response]
       call_methods(action)
     end
+    driver(self) if response == 'driver'
   end
 
   def build_tree(array)
@@ -98,7 +100,6 @@ class BST
     elsif node.right.nil? # Has a left child / No children
       set_node(parent, node.left, value)
     else # Two children
-      # binding.pry
       min = min_node(node.right)
       min = min.right unless min.right.nil?
       min_data = min.data
@@ -124,3 +125,4 @@ class BST
   end
 end
 BST.new
+puts "Thank you for using this program. Hope you've enjoyed it!"
