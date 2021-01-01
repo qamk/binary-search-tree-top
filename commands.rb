@@ -20,7 +20,6 @@ module Commands
       'c' => 'commands',
       'clear' => 'clear',
       'print' => 'pretty_print'
-      
     }
   end
 
@@ -41,13 +40,17 @@ module Commands
 
   def call_methods(action)
     puts
-    if %w[delete_prep insert find height_prep].include? action
-      print 'Please enter a positive integer (non-numerical values will default to 0): '
-      arg = gets.chomp.to_i
+    if %w[delete_prep insert height_prep].include? action
+      arg = enter_msg
       send(action, arg)
     elsif %w[level_order inorder postorder preorder].include? action
       nodes = send(action)
+      puts "#{action.capitalize}: "
       nodes.each { |node| print "\e[38;5;#{node}m#{node}\e[0m " }
+    elsif action == 'find'
+      arg = enter_msg
+      found = send(action, arg)
+      pretty_print(found[0]) unless found.nil?
     elsif action == 'clear'
       system('clear')
     else
@@ -57,7 +60,8 @@ module Commands
 
   def welcome
     puts %(
-      Welcome to the \e[95mBinary Search Tree\e[0m (BST) program. Here you can enter different \e[1mCommands\e[0m to interact with the tree.
+      Welcome to the \e[95mBinary Search Tree\e[0m (BST) program.
+      Here you can enter different \e[1mcommands\e[0m to interact with the tree.
       A BST use pointers, similar to a linked list. However, it has a left and right pointers rather than next.
       Starting from a list, a tree is built, using the mid-points of the array and sub-arrays to define "parent" nodes.
       The left pointer then points to a lower value, the right pointer a higher value.
@@ -73,5 +77,10 @@ module Commands
 
   def valid?(command)
     use.include? command
+  end
+
+  def enter_msg
+    print 'Please enter a positive integer (non-numerical values will default to 0): '
+    gets.chomp.to_i
   end
 end

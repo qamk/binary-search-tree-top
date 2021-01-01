@@ -45,9 +45,13 @@ module Traversal
   end
 
   def find(value, node = root, parent = root)
-    return [nil] if node.nil?
-
-    return [node, parent] if node.data == value
+    if node.nil?
+      puts 'Value not found'
+      return [nil]
+    elsif node.data == value
+      puts "\e[38;5;11mFound\e[0m #{value}"
+      return [node, parent]
+    end
 
     value > node.data ? find(value, node.right, node) : find(value, node.left, node)
   end
@@ -70,10 +74,10 @@ module Traversal
     node = find(value)[0]
     return if node == false
 
-    height(node)
+    puts "The \e[38;5;99mheight\e[0m of the node is #{height(node)}"
   end
 
   def depth
-    height(root)
+    puts "The \e[38;5;190mdepth\e[0m of the tree is #{height(root)}"
   end
 end

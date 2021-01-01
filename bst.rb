@@ -3,7 +3,7 @@
 require_relative 'node.rb'
 require_relative 'traversal.rb'
 require_relative 'commands.rb'
-
+require 'pry'
 
 # Class representing a Balanced Binary Search Tree (BST)
 class BST
@@ -41,29 +41,32 @@ class BST
 
   def insert(value, parent = root, node = root)
     if node.nil?
-      puts "Inserted \e[32m#{value}\e[0m!"
+      puts "\e[38;5;82mInserted\e[0m #{value}!"
       set_node(parent, Node.new(value), value)
       return
     end
     return puts "\e[1mDuplicate entered\e[0m. That value already exists." if parent.data == value
 
-    puts "Value: \e[31m#{value}\e[0m Node: \e[33m#{node.data}\e[0m"
+    # puts "Value: \e[31m#{value}\e[0m Node: \e[33m#{node.data}\e[0m"
     value > node.data ? insert(value, node, node.right) : insert(value, node, node.left)
   end
 
   def balanced?
     diff = height(root.left) - height(root.right)
+    puts diff.abs <= 1
     diff.abs <= 1
   end
 
   def rebuild
-    new_tree_contents = Array.new(5..15) { rand(230) }.sort.uniq
-    build_tree(new_tree_contents)
+    new_tree_contents = Array.new(rand(5..15)) { rand(230) }.sort.uniq
+    @root = build_tree(new_tree_contents)
+    puts "\e[38;5;220mRebuilt\e[0m the tree!"
   end
 
   def rebalance
     return puts 'Tree is already balanced' if balanced?
 
+    puts "\e[38;5;43mRebalancing\e[0m..."
     @root = build_tree(inorder)
   end
 
@@ -95,10 +98,13 @@ class BST
     elsif node.right.nil? # Has a left child / No children
       set_node(parent, node.left, value)
     else # Two children
+      # binding.pry
       min = min_node(node.right)
       min = min.right unless min.right.nil?
       min_data = min.data
       delete_prep(min_data)
+      return set_root_data(min_data) if value == root.data
+
       set_node(parent, min_data, value, true)
     end
   end
@@ -111,6 +117,10 @@ class BST
       parent.left = new_value unless ref_value > parent.data
       parent.right = new_value unless ref_value < parent.data
     end
+  end
+
+  def set_root_data(new_value)
+    @root.data = new_value
   end
 end
 BST.new
